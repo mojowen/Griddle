@@ -1153,7 +1153,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      loadingContent = React.createElement(
 	        "tbody",
-	        null,
+	        { className: "footer" },
 	        React.createElement(
 	          "tr",
 	          null,
@@ -1176,7 +1176,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (!anyHasChildren) {
 	      nodes = React.createElement(
 	        "tbody",
-	        null,
+	        { className: "results" },
 	        nodes
 	      );
 	    }

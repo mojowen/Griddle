@@ -206,15 +206,14 @@ var GridTable = React.createClass({
           textAlign: "center",
           paddingBottom: "40px"
         };
-
-        defaultColSpan = this.props.columnSettings.getVisibleColumnCount();
       }
+      defaultColSpan = this.props.columnSettings.getVisibleColumnCount();
 
       var loadingComponent = this.props.externalLoadingComponent ?
         (<this.props.externalLoadingComponent/>) :
         (<div>Loading...</div>);
 
-      loadingContent = (<tbody><tr><td style={defaultLoadingStyle} colSpan={defaultColSpan}>{loadingComponent}</td></tr></tbody>);
+      loadingContent = (<tbody className="footer"><tr><td style={defaultLoadingStyle} colSpan={defaultColSpan}>{loadingComponent}</td></tr></tbody>);
     }
 
     //construct the table heading component
@@ -227,7 +226,7 @@ var GridTable = React.createClass({
 
     //check to see if any of the rows have children... if they don't wrap everything in a tbody so the browser doesn't auto do this
     if (!anyHasChildren){
-      nodes = <tbody>{nodes}</tbody>
+      nodes = <tbody className="results">{nodes}</tbody>
     }
 
     var pagingContent = "";
