@@ -64,7 +64,7 @@ var GridSettings = React.createClass({
                 </div>)
                 : "";
 
-        var setPageSize = this.props.showSetPageSize ? (<div>
+        var setPageSize = this.props.showSetPageSize ? (<div className="griddle-pagesize">
                     <label htmlFor="maxRows">{this.props.maxRowsText}:
                         <select onChange={this.setPageSize} value={this.props.resultsPerPage}>
                             <option value="5">5</option>

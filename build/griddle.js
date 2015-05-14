@@ -460,8 +460,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                data = _.first(data, (currentPage + 1) * this.props.resultsPerPage);
 	            } else {
 	                //the 'rest' is grabbing the whole array from index on and the 'initial' is getting the first n results
-	                var rest = _.rest(data, currentPage * this.props.resultsPerPage);
-	                data = _.initial(rest, rest.length - this.props.resultsPerPage);
+	                var rest = _.drop(data, currentPage * this.props.resultsPerPage);
+	                data = (_.dropRight || _.initial)(rest, rest.length - this.props.resultsPerPage);
 	            }
 	        }
 
@@ -1330,7 +1330,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        color: "#222"
 	      } : null;
 	      pagingContent = React.createElement(
-	        "tbody",
+	        "tfoot",
 	        null,
 	        React.createElement(
 	          "tr",
@@ -1510,6 +1510,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            ),
 	            React.createElement(
 	                "div",
+	                { className: this.props.nextClassName, style: rightStyle },
+	                next
+	            ),
+	            React.createElement(
+	                "div",
 	                { className: "griddle-page", style: middleStyle },
 	                React.createElement(
 	                    "select",
@@ -1518,11 +1523,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                ),
 	                " / ",
 	                this.props.maxPage
-	            ),
-	            React.createElement(
-	                "div",
-	                { className: this.props.nextClassName, style: rightStyle },
-	                next
 	            )
 	        );
 	    }
@@ -1629,7 +1629,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        var setPageSize = this.props.showSetPageSize ? React.createElement(
 	            "div",
-	            null,
+	            { className: "griddle-pagesize" },
 	            React.createElement(
 	                "label",
 	                { htmlFor: "maxRows" },
@@ -1712,7 +1712,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        return React.createElement(
 	            "div",
-	            null,
+	            { className: "griddle-nodatamessage" },
 	            this.props.noDataMessage
 	        );
 	    }
@@ -1763,12 +1763,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.props.toggleChildren();
 	        }
 	    },
+	    handleSelectionChange: function (e) {
+	        //hack to get around warning that's not super useful in this case
+	        return;
+	    },
 	    handleSelectClick: function (e) {
 	        if (this.props.multipleSelectionSettings.isMultipleSelection) {
 	            if (e.target.type === "checkbox") {
 	                this.props.multipleSelectionSettings.toggleSelectRow(this.props.data, this.refs.selected.getDOMNode().checked);
 	            } else {
-	                this.props.multipleSelectionSettings.toggleSelectRow(this.props.data, !React.findDOMNode(this.refs.selected).checked);
+	                this.props.multipleSelectionSettings.toggleSelectRow(this.props.data, !this.refs.selected.getDOMNode().checked);
 	            }
 	        }
 	    },
@@ -1848,8 +1852,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            nodes.unshift(React.createElement(
 	                "td",
-	                { style: columnStyles },
-	                React.createElement("input", { type: "checkbox", checked: this.props.multipleSelectionSettings.getIsRowChecked(dataView), ref: "selected" })
+	                { key: "selection", style: columnStyles },
+	                React.createElement("input", {
+	                    type: "checkbox",
+	                    checked: this.props.multipleSelectionSettings.getIsRowChecked(dataView),
+	                    onChange: this.handleSelectionChange,
+	                    ref: "selected" })
 	            ));
 	        }
 
@@ -1994,6 +2002,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    toggleSelectAll: function (event) {
 	        this.props.multipleSelectionSettings.toggleSelectAll();
 	    },
+	    handleSelectionChange: function (event) {
+	        //hack to get around warning message that's not helpful in this case
+	        return;
+	    },
 	    verifyProps: function () {
 	        if (this.props.columnSettings === null) {
 	            console.error("gridTitle: The columnSettings prop is null and it shouldn't be");
@@ -2049,8 +2061,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (nodes && this.props.multipleSelectionSettings.isMultipleSelection) {
 	            nodes.unshift(React.createElement(
 	                "th",
-	                { onClick: this.toggleSelectAll, style: titleStyles },
-	                React.createElement("input", { type: "checkbox", checked: this.props.multipleSelectionSettings.getIsSelectAllChecked() })
+	                { key: "selection", onClick: this.toggleSelectAll, style: titleStyles },
+	                React.createElement("input", { type: "checkbox", checked: this.props.multipleSelectionSettings.getIsSelectAllChecked(), onChange: this.handleSelectionChange })
 	            ));
 	        }
 

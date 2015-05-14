@@ -13,7 +13,7 @@ var GridNoData = React.createClass({
         var that = this;
 
         return(
-            <div>{this.props.noDataMessage}</div>
+            <div className="griddle-nodatamessage">{this.props.noDataMessage}</div>
         );
     }
 });
