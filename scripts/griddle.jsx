@@ -95,6 +95,7 @@ var Griddle = React.createClass({
             "parentRowCollapsedClassName": "parent-row",
             "parentRowExpandedClassName": "parent-row expanded",
             "settingsToggleClassName": "settings",
+            "extraSettingsButtonsComponent": null,
             "nextClassName": "griddle-next",
             "previousClassName": "griddle-previous",
             "headerStyles": {},
@@ -625,6 +626,7 @@ var Griddle = React.createClass({
             </div>
             <div className="griddle-settings-toggle" style={settingsStyles}>
                 {settings}
+                <this.props.extraSettingsButtonsComponent />
             </div>
         </div>);
     },

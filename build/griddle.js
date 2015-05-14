@@ -161,6 +161,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            parentRowCollapsedClassName: "parent-row",
 	            parentRowExpandedClassName: "parent-row expanded",
 	            settingsToggleClassName: "settings",
+	            extraSettingsButtonsComponent: null,
 	            nextClassName: "griddle-next",
 	            previousClassName: "griddle-previous",
 	            headerStyles: {},
@@ -680,7 +681,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            React.createElement(
 	                "div",
 	                { className: "griddle-settings-toggle", style: settingsStyles },
-	                settings
+	                settings,
+	                React.createElement(this.props.extraSettingsButtonsComponent, null)
 	            )
 	        );
 	    },
