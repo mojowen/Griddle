@@ -126,6 +126,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            useGriddleIcons: true,
 	            customRowComponent: null,
 	            customGridComponent: null,
+	            customFilterComponet: null,
 	            customPagerComponent: {},
 	            enableToggleCustom: false,
 	            noDataMessage: "There is no data to display.",
@@ -633,7 +634,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        };
 	    },
 	    getFilter: function () {
-	        return this.props.showFilter && this.props.useCustomGridComponent === false ? React.createElement(GridFilter, { changeFilter: this.setFilter, placeholderText: this.props.filterPlaceholderText }) : "";
+	        if (this.props.showFilter && this.props.useCustomGridComponent === false) {
+	            if (this.props.customFilterComponet) {
+	                return React.createElement(this.props.customFilterComponet, { filterValue: this.props.filterValue, changeFilter: this.setFilter, placeholderText: this.props.filterPlaceholderText });
+	            } else {
+	                return React.createElement(GridFilter, { filterValue: this.props.filterValue, changeFilter: this.setFilter, placeholderText: this.props.filterPlaceholderText });
+	            }
+	        } else {
+	            return "";
+	        }
 	    },
 	    getSettings: function () {
 	        return this.props.showSettings ? React.createElement(

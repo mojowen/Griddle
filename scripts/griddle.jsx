@@ -60,6 +60,7 @@ var Griddle = React.createClass({
             "useGriddleIcons": true,
             "customRowComponent": null,
             "customGridComponent": null,
+            "customFilterComponet": null,
             "customPagerComponent": {},
             "enableToggleCustom":false,
             "noDataMessage":"There is no data to display.",
@@ -583,9 +584,15 @@ var Griddle = React.createClass({
         };
     },
     getFilter: function(){
-     return ((this.props.showFilter && this.props.useCustomGridComponent === false) ?
-        <GridFilter changeFilter={this.setFilter} placeholderText={this.props.filterPlaceholderText} /> :
-        "");
+        if(this.props.showFilter && this.props.useCustomGridComponent === false) {
+            if( this.props.customFilterComponet ) {
+                return <this.props.customFilterComponet filterValue={this.props.filterValue} changeFilter={this.setFilter} placeholderText={this.props.filterPlaceholderText} />
+            } else {
+                return <GridFilter filterValue={this.props.filterValue} changeFilter={this.setFilter} placeholderText={this.props.filterPlaceholderText} />
+            }
+        } else {
+            return "";
+        }
     },
     getSettings: function(){
         return (this.props.showSettings ?
