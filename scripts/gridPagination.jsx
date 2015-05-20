@@ -25,6 +25,7 @@ var GridPagination = React.createClass({
     render: function(){
         var previous = "";
         var next = "";
+        var selectPage = "";
 
         if(this.props.currentPage > 0){
             previous = <button type="button" onClick={this.props.previous} style={this.props.useGriddleStyles ? {"color": "#222", border: "none", background: "none", margin: "0 0 0 10px"} : null}>{this.props.previousIconComponent}{this.props.previousText}</button>
@@ -50,21 +51,21 @@ var GridPagination = React.createClass({
             leftStyle = _.extend({ width: "33%"}, baseStyle)
         }
 
-        var options = [];
 
-        for(var i = 1; i<= this.props.maxPage; i++){
-            options.push(<option value={i} key={i}>{i}</option>);
+        if(this.props.maxPage > 1) {
+            var options = [];
+
+            for(var i = 1; i<= this.props.maxPage; i++){
+                options.push(<option value={i} key={i}>{i}</option>);
+            }
+            var selectPage = <div className="griddle-page" style={middleStyle}><select value={this.props.currentPage+1} onChange={this.pageChange}>{options}</select> / {this.props.maxPage}</div>
         }
 
         return (
             <div style={this.props.useGriddleStyles ? { minHeight: "35px" } : null }>
                 <div className={this.props.previousClassName} style={leftStyle}>{previous}</div>
                 <div className={this.props.nextClassName} style={rightStyle}>{next}</div>
-                <div className="griddle-page" style={middleStyle}>
-                    <select value={this.props.currentPage+1} onChange={this.pageChange}>
-                        {options}
-                    </select> / {this.props.maxPage}
-                </div>
+                {selectPage}
             </div>
         )
     }

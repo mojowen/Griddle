@@ -1455,6 +1455,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    render: function () {
 	        var previous = "";
 	        var next = "";
+	        var selectPage = "";
 
 	        if (this.props.currentPage > 0) {
 	            previous = React.createElement(
@@ -1490,14 +1491,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	            leftStyle = _.extend({ width: "33%" }, baseStyle);
 	        }
 
-	        var options = [];
 
-	        for (var i = 1; i <= this.props.maxPage; i++) {
-	            options.push(React.createElement(
-	                "option",
-	                { value: i, key: i },
-	                i
-	            ));
+	        if (this.props.maxPage > 1) {
+	            var options = [];
+
+	            for (var i = 1; i <= this.props.maxPage; i++) {
+	                options.push(React.createElement(
+	                    "option",
+	                    { value: i, key: i },
+	                    i
+	                ));
+	            }
+	            var selectPage = React.createElement(
+	                "div",
+	                { className: "griddle-page", style: middleStyle },
+	                React.createElement(
+	                    "select",
+	                    { value: this.props.currentPage + 1, onChange: this.pageChange },
+	                    options
+	                ),
+	                " / ",
+	                this.props.maxPage
+	            );
 	        }
 
 	        return React.createElement(
@@ -1513,17 +1528,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                { className: this.props.nextClassName, style: rightStyle },
 	                next
 	            ),
-	            React.createElement(
-	                "div",
-	                { className: "griddle-page", style: middleStyle },
-	                React.createElement(
-	                    "select",
-	                    { value: this.props.currentPage + 1, onChange: this.pageChange },
-	                    options
-	                ),
-	                " / ",
-	                this.props.maxPage
-	            )
+	            selectPage
 	        );
 	    }
 	});
