@@ -1587,6 +1587,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if (typeof meta !== "undefined" && typeof meta.displayName !== "undefined" && meta.displayName != null) {
 	                    displayName = meta.displayName;
 	                }
+	                displayName = _.map(displayName.split("_"), function (word) {
+	                    return word[0].toUpperCase() + word.slice(1);
+	                }).join(" ");
 
 	                if (typeof meta !== "undefined" && meta != null && meta.locked) {
 	                    return React.createElement(
@@ -2049,6 +2052,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    cursor: columnIsSortable ? "pointer" : "default"
 	                };
 	            }
+
+	            displayName = _.map(displayName.split("_"), function (word) {
+	                return word[0].toUpperCase() + word.slice(1);
+	            }).join(" ");
 
 	            return React.createElement(
 	                "th",

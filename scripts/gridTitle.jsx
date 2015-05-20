@@ -75,6 +75,11 @@ var GridTitle = React.createClass({
           }
         }
 
+        displayName = _.map(displayName.split('_'),
+          function(word) {
+            return word[0].toUpperCase() + word.slice(1) })
+        .join(' ')
+
         return (<th onClick={columnIsSortable ? that.sort : null} data-title={col} className={columnSort} key={displayName} style={titleStyles}>{displayName}{sortComponent}</th>);
     });
 

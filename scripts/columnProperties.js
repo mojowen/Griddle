@@ -48,7 +48,7 @@ class ColumnProperties{
         if (typeof metaItem === 'undefined' || metaItem === null || isNaN(metaItem.order)){
             return ORDER_MAX;
         }
-        
+
         return metaItem.order;
     });
 
